@@ -3,5 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "onigra",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "firebase-admin": "^6.1.0",
+    "firebase-functions": "^2.1.0"
+  }
 }
