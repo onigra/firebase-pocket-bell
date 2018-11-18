@@ -1,38 +1,19 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import * as express from "express";
-import * as bodyParser from "body-parser";
+import * as Call from "./call";
 
-// Setup express
-const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-// Setup firebase SDK
 admin.initializeApp();
 
-// call
-app.post("/", async (req, res) => {
-  console.log(req.body);
+export const call = functions.https.onRequest((req, res) => {
+  if (req.method !== "POST") {
+    res.status(405).send("Method Not Allowed");
+    return 0;
+  }
 
-  await admin
-    .database()
-    .ref("/calls")
-    .push({
-      from: req.body.from,
-      to: req.body.to,
-      message: req.body.message
-    });
-
-  return res.status(201).json({
-    request: "ok",
-    from: req.body.from,
-    to: req.body.to,
-    message: req.body.message
-  });
+  Call.save(req);
+  Call.render(req, res);
+  return 0;
 });
-
-export const call = functions.https.onRequest(app);
 
 // Push to phone
 export const push = functions.database
