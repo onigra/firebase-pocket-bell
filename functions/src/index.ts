@@ -32,10 +32,10 @@ app.post("/", async (req, res) => {
   });
 });
 
-exports.call = functions.https.onRequest(app);
+export const call = functions.https.onRequest(app);
 
 // Push to phone
-exports.push = functions.database
+export const push = functions.database
   .ref("/calls/{pushId}")
   .onCreate((snapshot, context) => {
     const call = snapshot.val();
