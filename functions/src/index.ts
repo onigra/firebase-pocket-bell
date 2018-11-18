@@ -22,5 +22,5 @@ export const push = functions.database
     const call = snapshot.val();
     console.log(call);
     // push(to: call.to, message: call.message)
-    return;
+    return 0;
   });
